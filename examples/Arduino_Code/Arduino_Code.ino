@@ -27,7 +27,7 @@ void setup() {
 }
 
 void loop() {
-  if (DoinoCoin.work())
+  if (DoinoCoin.loop())
   {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
     delay(25); // Wait a bit

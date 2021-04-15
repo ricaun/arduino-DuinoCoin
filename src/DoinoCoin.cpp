@@ -1,13 +1,12 @@
-// Adapted from https://developer.mbed.org/teams/myDevicesIoT/code/Cayenne-LPP/
-
-// Copyright © 2017 The Things Network
-// Use of this source code is governed by the MIT license that can be found in the LICENSE file.
 
 #include "DoinoCoin.h"
 
 DoinoCoin::DoinoCoin(HardwareSerial &stream) : serial(stream)
 {
-  
+  // Grab Arduino chip ID
+  ID = "DUCOID";
+  for (size_t i = 0; i < 8; i++)
+    ID += UniqueID[i];
 }
 
 DoinoCoin::~DoinoCoin(void)
@@ -19,84 +18,41 @@ void DoinoCoin::begin(void)
 {
   serial.begin(115200); // Open serial port
   serial.setTimeout(5000);
-  if (serial.available()) {
-    serial.println("ready"); // Send start word to miner program
-    return;
-  }
-  serial.println(DUINOCOIN_VERSION);
+}
+
+void DoinoCoin::test(Stream &stream)
+{
+  stream.print("251 ");
+  stream.println(ducos1a("2eebb02e9b4995c15d46727dc0427478e738a505", "73a34a3ca74449c0565961476772714e940c9cf0", 6));
+  stream.print("482 ");
+  stream.println(ducos1a("68958c4aab39fbfb4453fb4ee0398a580af7abaf", "b430b3b1d76a6b1ae0464b327e786f43801a02cb", 6));
+  stream.print("185 ");
+  stream.println(ducos1a("f5da2de2ca442868678363e28298bf16f1e3a856", "5a9320c0015d1dd4eee6f90ad1a7d429577abf88", 6));
 }
 
 bool DoinoCoin::loop(void)
 {
-  String IDstring = "DUCOID";
-  String lastblockhash = "";
-  String newblockhash = "";
-  unsigned int difficulty = 0;
-  unsigned int ducos1result = 0;
-
   if (serial.available() > 0) {
     // Read last block hash
-    lastblockhash = serial.readStringUntil(',');
+    String lastblockhash = serial.readStringUntil(',');
     // Read expected hash
-    newblockhash = serial.readStringUntil(',');
+    String newblockhash = serial.readStringUntil(',');
     // Read difficulty
-    difficulty = serial.readStringUntil(',').toInt();
+    unsigned int difficulty = serial.readStringUntil(',').toInt();
     // Start time measurement
     unsigned long startTime = micros();
     // Call DUCO-S1A hasher
-    ducos1result = ducos1a(lastblockhash, newblockhash, difficulty);
+    unsigned int ducos1result = ducos1a(lastblockhash, newblockhash, difficulty);
     // End time measurement
     unsigned long endTime = micros();
     // Calculate elapsed time
     unsigned long elapsedTime = endTime - startTime;
     // Send result back to the program with share time
-    serial.print(String(ducos1result) + "," + String(elapsedTime) + "," + String(IDstring) + "\n");
+    serial.print(String(ducos1result) + "," + String(elapsedTime) + "," + String(ID) + "\n");
     return true;
   }
   return false;
 }
-
-bool DoinoCoin::work(void)
-{
-  String result; // Create globals
-  char buffer[64] = "";
-  unsigned int iJob = 0;
-
-  String startStr = serial.readStringUntil('\n');
-  if (startStr == "start") { // Wait for start word, serial.available caused problems
-    serial.flush(); // Clear serial buffer
-    String hash = serial.readStringUntil('\n'); // Read hash
-    String job = serial.readStringUntil('\n'); // Read job
-    unsigned int diff = serial.parseInt() * 100 + 1; // Read difficulty
-    unsigned long StartTime = micros(); // Start time measurement
-    #ifdef REVERSE_SEARCH
-    for (unsigned int iJob = diff; iJob >= 0; iJob--) { // Reversed difficulty loop
-    #else
-    for (unsigned int iJob = 0; iJob < diff; iJob++) { // Difficulty loop
-    #endif
-      Sha1.init(); // Create SHA1 hasher
-      Sha1.print(String(hash) + String(iJob));
-      uint8_t * hash_bytes = Sha1.result(); // Get result
-      for (int i = 0; i < 10; i++) { // Cast result to array
-        for (int i = 0; i < 32; i++) {
-          buffer[2 * i] = "0123456789abcdef"[hash_bytes[i] >> 4]; // MSB to LSB (Depending on the address in hash_bytes)
-          // Choose that from the given array of characters
-          buffer[2 * i + 1] = "0123456789abcdef"[hash_bytes[i] & 0xf]; // Retreve the value from address next spot over
-        }
-      }
-      result = String(buffer); // Convert and prepare array
-      result.remove(40); // First 40 characters are good, rest is garbage
-      if (String(result) == String(job)) { // If result is found
-        unsigned long EndTime = micros(); // End time measurement
-        unsigned long ElapsedTime = EndTime - StartTime; // Calculate elapsed time
-        serial.println(String(iJob) + "," + String(ElapsedTime)); // Send result back to the program with share time
-        return true; // Stop the loop and wait for more work
-      }
-    }
-  }
-  return false;
-}
-
 
 // DUCO-S1A hasher
 uint32_t DoinoCoin::ducos1a(String lastblockhash, String newblockhash, int difficulty) {
