@@ -6,7 +6,7 @@
 # Class (KEYWORD1)
 #######################################
 
-DoinoCoin	KEYWORD1
+DuinoCoin	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

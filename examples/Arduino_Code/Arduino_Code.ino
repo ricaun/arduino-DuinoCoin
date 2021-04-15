@@ -17,17 +17,17 @@
 //  and navigate to Getting Started page. Happy mining!
 //////////////////////////////////////////////////////////
 
-#include <DoinoCoin.h>
+#include <DuinoCoin.h>
 
-DoinoCoin DoinoCoin(Serial);
+DuinoCoin DuinoCoin(Serial);
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT); // Prepare built-in led pin as output
-  DoinoCoin.begin();
+  DuinoCoin.begin();
 }
 
 void loop() {
-  if (DoinoCoin.loop())
+  if (DuinoCoin.loop())
   {
     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
     delay(25); // Wait a bit

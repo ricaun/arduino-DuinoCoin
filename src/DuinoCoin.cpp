@@ -1,7 +1,7 @@
 
-#include "DoinoCoin.h"
+#include "DuinoCoin.h"
 
-DoinoCoin::DoinoCoin(HardwareSerial &stream) : serial(stream)
+DuinoCoin::DuinoCoin(HardwareSerial &stream) : serial(stream)
 {
   // Grab Arduino chip ID
   ID = "DUCOID";
@@ -9,18 +9,18 @@ DoinoCoin::DoinoCoin(HardwareSerial &stream) : serial(stream)
     ID += UniqueID[i];
 }
 
-DoinoCoin::~DoinoCoin(void)
+DuinoCoin::~DuinoCoin(void)
 {
   
 }
 
-void DoinoCoin::begin(void)
+void DuinoCoin::begin(void)
 {
   serial.begin(115200); // Open serial port
   serial.setTimeout(5000);
 }
 
-void DoinoCoin::test(Stream &stream)
+void DuinoCoin::test(Stream &stream)
 {
   stream.print("251 ");
   stream.println(ducos1a("2eebb02e9b4995c15d46727dc0427478e738a505", "73a34a3ca74449c0565961476772714e940c9cf0", 6));
@@ -30,7 +30,7 @@ void DoinoCoin::test(Stream &stream)
   stream.println(ducos1a("f5da2de2ca442868678363e28298bf16f1e3a856", "5a9320c0015d1dd4eee6f90ad1a7d429577abf88", 6));
 }
 
-bool DoinoCoin::loop(void)
+bool DuinoCoin::loop(void)
 {
   if (serial.available() > 0) {
     // Read last block hash
@@ -55,7 +55,7 @@ bool DoinoCoin::loop(void)
 }
 
 // DUCO-S1A hasher
-uint32_t DoinoCoin::ducos1a(String lastblockhash, String newblockhash, int difficulty) {
+uint32_t DuinoCoin::ducos1a(String lastblockhash, String newblockhash, int difficulty) {
   char buffer[44];
   // DUCO-S1 algorithm implementation for AVR boards (DUCO-S1A)
   // Difficulty loop
