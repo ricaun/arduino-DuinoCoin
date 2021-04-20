@@ -3,10 +3,7 @@
 
 #include <Arduino.h>
 #include <ArduinoUniqueID.h>
-
-#if defined(ARDUINO_ARCH_AVR)
-#include "avr/sha1.h"
-#endif
+#include "Ducos1a.h"
 
 class DuinoCoin
 {
@@ -18,7 +15,7 @@ public:
   bool loop();
 
   void test(Stream &stream);
-  
+
   uint32_t ducos1a(String lastblockhash, String newblockhash, int difficulty);
 
 private:

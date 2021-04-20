@@ -35,7 +35,7 @@ The library comes with [examples](examples). After installing the library you ne
 DuinoCoin DuinoCoin(Serial);
 ```
 
-## Begin
+## Method:begin
 
 ```c
 void setup() {
@@ -43,7 +43,7 @@ void setup() {
 }
 ```
 
-## Loop
+## Method:loop
 
 ```c
 void loop() {

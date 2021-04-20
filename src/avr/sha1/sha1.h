@@ -25,6 +25,8 @@
 
 #ifdef __AVR__
 #define ssize_t long int
+#else
+#define ssize_t size_t
 #endif
 
 ssize_t sha1_hasher_write(sha1_hasher_t hasher, const void * buf, size_t count); 
