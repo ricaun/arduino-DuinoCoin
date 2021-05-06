@@ -4,13 +4,13 @@
 #include <Arduino.h>
 
 #if defined(ARDUINO_ARCH_AVR)
-#include "avr/Ducos1a_avr.h"
+#include "hash/Ducos1a_hash.h"
 #elif defined(ARDUINO_ARCH_ESP8266)
 #include "esp/Ducos1a_esp.h"
 #elif defined(ARDUINO_ARCH_ESP32)
 #include "esp32/Ducos1a_esp32.h"
 #else
-
+#include "hash/Ducos1a_hash.h"
 #endif
 
 extern Ducos1a_t Ducos1a;
