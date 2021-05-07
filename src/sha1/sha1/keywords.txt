@@ -1,21 +1,22 @@
 #######################################
-# Syntax Coloring Map
+# Syntax Coloring Map For Cryptolib
 #######################################
 
 #######################################
-# Class (KEYWORD1)
+# Datatypes (KEYWORD1)
 #######################################
-
-DuinoCoin	KEYWORD1
-Ducos1a	KEYWORD1
+Sha1	KEYWORD1
+Sha256	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
 
-begin	KEYWORD2
-loop	KEYWORD2
-work	KEYWORD2
+init	KEYWORD2
+initHmac	KEYWORD2
+add	KEYWORD2
+result	KEYWORD2
+resultHmac	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

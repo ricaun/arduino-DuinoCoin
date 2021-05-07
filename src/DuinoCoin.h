@@ -14,7 +14,7 @@ public:
   void begin();
   bool loop();
 
-  void test(Stream &stream);
+  //void test(Stream &stream);
 
   uint32_t ducos1a(String lastblockhash, String newblockhash, int difficulty);
 

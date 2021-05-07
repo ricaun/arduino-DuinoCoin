@@ -24,7 +24,7 @@ void DuinoCoin::begin(void)
   while (!serial);
   serial.setTimeout(5000);
 }
-
+/*
 void DuinoCoin::test(Stream &stream)
 {
   unsigned long time = 0;
@@ -47,7 +47,7 @@ void DuinoCoin::test(Stream &stream)
   stream.print(" | Time: ");
   stream.println(millis() - time);
 }
-
+*/
 bool DuinoCoin::loop(void)
 {
   if (serial.available() > 0) {
