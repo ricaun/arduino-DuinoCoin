@@ -21,20 +21,22 @@ public:
     // DUCO-S1 algorithm implementation for AVR boards (DUCO-S1A)
     // Difficulty loop
     int ducos1res = 0;
-    for (int ducos1res = 0; ducos1res < difficulty * 100 + 1; ducos1res++)
+    for (int ducos = 0; ducos < difficulty * 100 + 1; ducos++)
     {
       Sha1.init();
-      Sha1.print(lastblockhash + ducos1res);
+      Sha1.print(lastblockhash + ducos);
       // Get SHA1 result
       uint8_t *hash_bytes = Sha1.result();
 
       if (memcmp(hash_bytes, job, sizeof(hash_bytes)) == 0)
       {
         // If expected hash is equal to the found hash, return the result
-        return ducos1res;
+        ducos1res = ducos;
+        break;
       }
     }
-    return 0;
+    free( job );
+    return ducos1res;
   }
 };
 
