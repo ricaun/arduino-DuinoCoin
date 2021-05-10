@@ -14,13 +14,11 @@ public:
   void begin();
   bool loop();
 
-  //void test(Stream &stream);
-
   uint32_t ducos1a(String lastblockhash, String newblockhash, int difficulty);
+  String getDUCOID();
 
 private:
   HardwareSerial &serial;
-  String ID;
 };
 
 #endif

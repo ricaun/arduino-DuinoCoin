@@ -9,9 +9,8 @@ public:
   // DUCO-S1A hasher
   uint32_t work(String lastblockhash, String newblockhash, int difficulty)
   {
-    // DUCO-S1 algorithm implementation for AVR boards (DUCO-S1A)
+    // DUCO-S1 algorithm implementation (DUCO-S1A)
     // Difficulty loop
-    int ducos1res = 0;
     for (int ducos1res = 0; ducos1res < difficulty * 100 + 1; ducos1res++)
     {
       String result = sha1(lastblockhash + String(ducos1res));
