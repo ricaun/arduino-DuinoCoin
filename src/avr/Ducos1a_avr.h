@@ -24,7 +24,7 @@ public:
     return 0;
 
   Sha1_base.init();
-  Sha1.print(String(lastblockhash));
+  Sha1.print(lastblockhash);
   for (int ducos1res = 0; ducos1res < difficulty * 100 + 1; ducos1res++)
   {
     Sha1 = Sha1_base;
