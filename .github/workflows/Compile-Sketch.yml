@@ -21,5 +21,6 @@ jobs:
           # The default is to compile for the Arduino Uno board. If you want to compile for other boards, use the `fqbn` input.
           libraries: |
             - name: ArduinoUniqueID
+            - name: DuinoCoin
           sketch-paths: |
             ./examples/Arduino_Code
