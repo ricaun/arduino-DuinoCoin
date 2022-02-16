@@ -1,5 +1,7 @@
 # arduino-DuinoCoin
 
+[![Compile Sketch](../../actions/workflows/Compile-Sketch.yml/badge.svg)](../../actions)
+
 Code for Arduino boards v2.4
 
 © Duino-Coin Community 2019-2021
