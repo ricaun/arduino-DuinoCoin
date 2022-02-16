@@ -1,4 +1,4 @@
-
+#pragma GCC optimize ("-Ofast")
 
 #ifndef Ducos1a_avr_h
 #define Ducos1a_avr_h
@@ -8,6 +8,7 @@
 class Ducos1a_avr
 {
 public:
+  Sha1Wrapper Sha1_base;
   // DUCO-S1A hasher
   uint32_t work(String lastblockhash, String newblockhash, int difficulty)
   {
@@ -22,10 +23,12 @@ public:
   if (difficulty > 655)
     return 0;
 
+  Sha1_base.init();
+  Sha1_base.print(lastblockhash);
   for (int ducos1res = 0; ducos1res < difficulty * 100 + 1; ducos1res++)
   {
-    Sha1.init();
-    Sha1.print(lastblockhash + String(ducos1res));
+    Sha1 = Sha1_base;
+    Sha1.print(String(ducos1res));
     // Get SHA1 result
     uint8_t *hash_bytes = Sha1.result();
     if (memcmp(hash_bytes, job, SHA1_HASH_LEN*sizeof(char)) == 0)
