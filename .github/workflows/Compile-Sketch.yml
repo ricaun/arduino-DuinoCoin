@@ -22,5 +22,6 @@ jobs:
           libraries: |
             - name: ArduinoUniqueID
             - name: DuinoCoin
+              source-path: "./src"
           sketch-paths: |
             ./examples/Arduino_Code
