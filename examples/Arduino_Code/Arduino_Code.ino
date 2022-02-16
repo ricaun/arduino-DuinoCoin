@@ -17,7 +17,7 @@
 //  and navigate to Getting Started page. Happy mining!
 //////////////////////////////////////////////////////////
 
-#include <DuinoCoin.h>
+#include "DuinoCoin.h"
 
 DuinoCoin DuinoCoin(Serial);
 
